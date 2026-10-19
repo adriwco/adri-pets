@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120" role="img" aria-label="Adri Pets">
+  <circle cx="60" cy="60" r="58" fill="#FFF6EA" stroke="#0F5257" stroke-width="4"/>
+  <circle cx="84" cy="34" r="22" fill="#FFD8A8"/>
+  <g fill="#C2531F" transform="translate(24 24) scale(3)">
+    <ellipse cx="12" cy="15.5" rx="4.2" ry="3.6"/>
+    <circle cx="6.5" cy="9.5" r="1.9"/>
+    <circle cx="9.8" cy="5.8" r="1.9"/>
+    <circle cx="14.2" cy="5.8" r="1.9"/>
+    <circle cx="17.5" cy="9.5" r="1.9"/>
+  </g>
+</svg>
