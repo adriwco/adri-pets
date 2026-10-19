@@ -1,0 +1,63 @@
+---
+import { siteConfig } from "../config/site.config";
+import { buildGenericMessage } from "../domain/buildWhatsAppMessage";
+import "../styles/global.css";
+
+interface Props {
+  title: string;
+  description: string;
+  showFloatingWhatsApp?: boolean;
+}
+
+const { title, description, showFloatingWhatsApp = true } = Astro.props;
+const { business } = siteConfig;
+const fullTitle = title === business.name ? title : `${title} | ${business.name}`;
+const genericWhatsApp = buildGenericMessage(business.whatsappE164, business.name);
+const brandStyle = `--brand-primary: ${business.primaryColorHex}; --brand-secondary: ${business.secondaryColorHex};`;
+const year = new Date().getFullYear();
+---
+
+<html lang="pt-BR" style={brandStyle}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content={business.primaryColorHex} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{fullTitle}</title>
+  </head>
+  <body class="min-h-dvh">
+    <a href="#conteudo" class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:rounded focus:bg-white focus:p-2">
+      Pular para o conteúdo
+    </a>
+    <header class="border-b border-line bg-white/80">
+      <div class="mx-auto flex max-w-5xl items-center justify-between gap-4 px-4 py-3">
+        <a href="/" class="text-lg font-bold text-brand-strong">{business.name}</a>
+        <nav class="flex gap-4 text-sm font-medium">
+          <a href="/orcamento" class="hover:underline">Orçamento</a>
+          <a href="/#perguntas" class="hover:underline">Dúvidas</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="conteudo" class="mx-auto max-w-5xl px-4 py-8">
+      <slot />
+    </main>
+
+    <footer class="border-t border-line py-8 pb-28 text-center text-sm text-muted sm:pb-8">
+      <p>{business.name} · Hospedagem familiar para cães em {business.city}/{business.state}</p>
+      <p class="mt-1"><a href="/privacidade" class="underline underline-offset-4">Privacidade</a> · © {year}</p>
+    </footer>
+
+    {showFloatingWhatsApp && (
+    <a
+      href={genericWhatsApp.url}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="fixed bottom-4 right-4 inline-flex min-h-12 items-center rounded-full bg-brand-strong px-5 font-semibold text-white shadow-lg"
+    >
+      Falar no WhatsApp
+    </a>
+    )}
+  </body>
+</html>
