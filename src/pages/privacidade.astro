@@ -1,0 +1,21 @@
+---
+import { siteConfig } from "../config/site.config";
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout title="Privacidade" description={`Como a ${siteConfig.business.name} trata os seus dados.`}>
+  <article class="max-w-2xl space-y-4 text-ink">
+    <h1 class="text-3xl font-bold">Privacidade</h1>
+    <p>Este site não coleta nem guarda dados pessoais.</p>
+    <p>
+      O simulador de orçamento funciona só no seu navegador. O que você preenche fica salvo apenas no seu próprio
+      aparelho, para não se perder se a página fechar, e você pode apagar a qualquer momento pelo botão "Limpar
+      simulação".
+    </p>
+    <p>
+      Quando você toca em "Quero reservar pelo WhatsApp", a mensagem é aberta no seu WhatsApp e só é enviada se você
+      quiser. A partir daí, a conversa segue pelo WhatsApp.
+    </p>
+    <p>As fotos de pets publicadas aqui só aparecem com autorização dos tutores.</p>
+  </article>
+</BaseLayout>
