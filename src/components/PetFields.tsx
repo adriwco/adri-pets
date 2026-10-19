@@ -2,6 +2,7 @@ import type { MedicationAnswer, PetAnswers, PetSex, TriState, VaccineAnswer } fr
 import { PET_SIZES, type PetSize } from "../domain/types";
 import type { PetView } from "../viewModels/useQuoteSimulator";
 import { ChoiceGroup } from "./ChoiceGroup";
+import { Icon } from "./Icon";
 
 interface PetFieldsProps {
   index: number;
@@ -18,8 +19,15 @@ const YES_NO = [
   { value: "NAO", label: "Não" },
 ] as const;
 
+const PAW_SIZE: Record<PetSize, number> = { PEQUENO: 16, MEDIO: 22, GRANDE: 30, GIGANTE: 38 };
+
 function booleanToChoice(value: boolean | null): "SIM" | "NAO" | null {
   return value === null ? null : value ? "SIM" : "NAO";
+}
+
+function splitSizeLabel(label: string): { name: string; detail: string } {
+  const match = /^(.*?)\s*\((.*)\)$/.exec(label);
+  return match ? { name: match[1] ?? label, detail: match[2] ?? "" } : { name: label, detail: "" };
 }
 
 export function PetFields({ index, view, sizeLabels, puppyMaxAgeMonths, canRemove, onChange, onRemove }: PetFieldsProps) {
@@ -30,38 +38,55 @@ export function PetFields({ index, view, sizeLabels, puppyMaxAgeMonths, canRemov
   return (
     <section class="card space-y-5" aria-labelledby={`${prefix}-title`}>
       <div class="flex items-center justify-between gap-3">
-        <h3 id={`${prefix}-title`} class="text-lg font-semibold text-ink">
+        <h3 id={`${prefix}-title`} class="flex items-center gap-2 text-xl font-semibold">
+          <span class="flex size-9 items-center justify-center rounded-full bg-accent-soft text-accent">
+            <Icon name="paw" size={20} />
+          </span>
           {displayName}
         </h3>
         {canRemove && (
-          <button type="button" class="text-sm text-muted underline underline-offset-4" onClick={onRemove}>
+          <button type="button" class="min-h-11 text-sm text-faint underline underline-offset-4" onClick={onRemove}>
             Remover
           </button>
         )}
       </div>
 
-      <div class="grid gap-4 sm:grid-cols-2">
-        <label class="field">
-          <span>Nome</span>
-          <input
-            type="text"
-            maxLength={40}
-            autocomplete="off"
-            value={pet.name}
-            onInput={(event) => onChange({ name: event.currentTarget.value })}
-          />
-        </label>
-        <label class="field">
-          <span>Porte</span>
-          <select value={pet.size} onChange={(event) => onChange({ size: event.currentTarget.value as PetSize })}>
-            {PET_SIZES.map((size) => (
-              <option key={size} value={size}>
-                {sizeLabels[size]}
-              </option>
-            ))}
-          </select>
-        </label>
-      </div>
+      <label class="field">
+        <span>Nome</span>
+        <input
+          type="text"
+          maxLength={40}
+          autocomplete="off"
+          value={pet.name}
+          onInput={(event) => onChange({ name: event.currentTarget.value })}
+        />
+      </label>
+
+      <fieldset>
+        <legend class="mb-2 text-sm font-bold text-ink">Porte</legend>
+        <div class="grid grid-cols-4 gap-2">
+          {PET_SIZES.map((size) => {
+            const { name, detail } = splitSizeLabel(sizeLabels[size]);
+            return (
+              <label key={size} class="size-card">
+                <input
+                  type="radio"
+                  class="sr-only"
+                  name={`${prefix}-size`}
+                  value={size}
+                  checked={pet.size === size}
+                  onChange={() => onChange({ size })}
+                />
+                <span>
+                  <Icon name="paw" size={PAW_SIZE[size]} />
+                  {name}
+                  {detail && <small class="-mt-1 text-[10px] font-semibold text-faint">{detail}</small>}
+                </span>
+              </label>
+            );
+          })}
+        </div>
+      </fieldset>
 
       <ChoiceGroup<PetSex>
         name={`${prefix}-sex`}
@@ -129,10 +154,10 @@ export function PetFields({ index, view, sizeLabels, puppyMaxAgeMonths, canRemov
         onChange={(medication) => onChange({ medication })}
       />
 
-      <label class="flex items-center gap-3 text-sm text-ink">
+      <label class="flex min-h-11 items-center gap-3 text-sm font-semibold text-ink">
         <input
           type="checkbox"
-          class="size-5 accent-brand-strong"
+          class="size-5 accent-brand"
           checked={pet.isPuppy}
           onChange={(event) => onChange({ isPuppy: event.currentTarget.checked })}
         />
@@ -154,7 +179,7 @@ export function PetFields({ index, view, sizeLabels, puppyMaxAgeMonths, canRemov
           }}
         />
         {food && (
-          <small class="text-sm text-ink">
+          <small class="text-sm font-normal text-ink">
             Traga cerca de <strong>{food.kgLabel}</strong> de ração para {displayName} (já com 15% de folga).
           </small>
         )}
