@@ -9,11 +9,13 @@ import BaseLayout from "../layouts/BaseLayout.astro";
   description={`Simule a hospedagem do seu cão na ${siteConfig.business.name} e veja o valor no PIX e no cartão na hora.`}
   showFloatingWhatsApp={false}
 >
-  <h1 class="text-3xl font-bold text-ink">Orçamento na hora</h1>
-  <p class="mt-2 max-w-2xl text-muted">
-    Preencha as datas e os dados do seu pet. O valor aparece na hora e você me envia tudo pelo WhatsApp com um toque.
-  </p>
-  <div class="mt-6">
-    <QuoteSimulator client:load config={siteConfig} />
+  <div class="mx-auto max-w-5xl px-5 pb-24 pt-2 lg:pb-0">
+    <h1 class="text-[32px] font-semibold sm:text-4xl">Orçamento na hora</h1>
+    <p class="mt-2 max-w-2xl text-muted">
+      Preencha as datas e os dados do seu pet. O valor aparece na hora e você me envia tudo pelo WhatsApp com um toque.
+    </p>
+    <div class="mt-6">
+      <QuoteSimulator client:load config={siteConfig} />
+    </div>
   </div>
 </BaseLayout>
