@@ -1,0 +1,19 @@
+---
+import { QuoteSimulator } from "../components/QuoteSimulator";
+import { siteConfig } from "../config/site.config";
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="Orçamento"
+  description={`Simule a hospedagem do seu cão na ${siteConfig.business.name} e veja o valor no PIX e no cartão na hora.`}
+  showFloatingWhatsApp={false}
+>
+  <h1 class="text-3xl font-bold text-ink">Orçamento na hora</h1>
+  <p class="mt-2 max-w-2xl text-muted">
+    Preencha as datas e os dados do seu pet. O valor aparece na hora e você me envia tudo pelo WhatsApp com um toque.
+  </p>
+  <div class="mt-6">
+    <QuoteSimulator client:load config={siteConfig} />
+  </div>
+</BaseLayout>
