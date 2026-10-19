@@ -111,8 +111,7 @@ tests/
 
 ## Documentação
 
-- [Regras para agentes de IA](AGENTS.md): convenções usadas por quem automatiza mudanças no projeto.
-- A especificação completa do negócio (regras, decisões e tabelas de referência) é mantida em um repositório privado.
+A especificação completa do negócio (regras, decisões e tabelas de referência) é mantida em um repositório privado.
 
 ## Privacidade
 
