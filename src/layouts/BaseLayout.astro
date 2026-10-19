@@ -1,4 +1,7 @@
 ---
+import "@fontsource-variable/fredoka";
+import "@fontsource-variable/nunito";
+import { Icon } from "../components/Icon";
 import { siteConfig } from "../config/site.config";
 import { buildGenericMessage } from "../domain/buildWhatsAppMessage";
 import "../styles/global.css";
@@ -22,42 +25,61 @@ const year = new Date().getFullYear();
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
-    <meta name="theme-color" content={business.primaryColorHex} />
+    <meta name="theme-color" content="#FFF6EA" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>{fullTitle}</title>
   </head>
-  <body class="min-h-dvh">
+  <body class="min-h-dvh overflow-x-hidden">
     <a href="#conteudo" class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:rounded focus:bg-white focus:p-2">
       Pular para o conteúdo
     </a>
-    <header class="border-b border-line bg-white/80">
-      <div class="mx-auto flex max-w-5xl items-center justify-between gap-4 px-4 py-3">
-        <a href="/" class="text-lg font-bold text-brand-strong">{business.name}</a>
-        <nav class="flex gap-4 text-sm font-medium">
-          <a href="/orcamento" class="hover:underline">Orçamento</a>
-          <a href="/#perguntas" class="hover:underline">Dúvidas</a>
-        </nav>
-      </div>
+    <header class="mx-auto flex max-w-5xl items-center justify-between gap-4 px-5 py-4">
+      <a href="/" class="flex items-center gap-2 no-underline">
+        <Icon name="paw" size={28} class="text-accent" />
+        <span class="font-display text-[22px] font-bold text-brand">{business.name}</span>
+      </a>
+      <nav class="flex items-center gap-2 text-sm font-bold sm:gap-5">
+        <a href="/orcamento" class="hidden text-ink hover:text-brand sm:inline">Orçamento</a>
+        <a href="/#perguntas" class="hidden text-ink hover:text-brand sm:inline">Dúvidas</a>
+        <a
+          href={genericWhatsApp.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Falar no WhatsApp"
+          class="flex size-11 items-center justify-center rounded-full bg-brand text-surface"
+        >
+          <Icon name="whatsapp" size={22} />
+        </a>
+      </nav>
     </header>
 
-    <main id="conteudo" class="mx-auto max-w-5xl px-4 py-8">
+    <main id="conteudo">
       <slot />
     </main>
 
-    <footer class="border-t border-line py-8 pb-28 text-center text-sm text-muted sm:pb-8">
-      <p>{business.name} · Hospedagem familiar para cães em {business.city}/{business.state}</p>
-      <p class="mt-1"><a href="/privacidade" class="underline underline-offset-4">Privacidade</a> · © {year}</p>
+    <footer class="mt-16 bg-brand py-10 pb-28 text-center text-sm text-on-brand-muted sm:pb-10">
+      <div class="mx-auto flex max-w-5xl flex-col items-center gap-2 px-5">
+        <Icon name="paw" size={26} class="text-sun" />
+        <p class="font-display text-lg font-semibold text-surface">{business.name}</p>
+        <p>Hospedagem familiar para cães em {business.city}/{business.state}</p>
+        <p>
+          <a href="/privacidade" class="text-surface underline underline-offset-4">Privacidade</a> · © {year}
+        </p>
+      </div>
     </footer>
 
-    {showFloatingWhatsApp && (
-    <a
-      href={genericWhatsApp.url}
-      target="_blank"
-      rel="noopener noreferrer"
-      class="fixed bottom-4 right-4 inline-flex min-h-12 items-center rounded-full bg-brand-strong px-5 font-semibold text-white shadow-lg"
-    >
-      Falar no WhatsApp
-    </a>
-    )}
+    {
+      showFloatingWhatsApp && (
+        <a
+          href={genericWhatsApp.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="fixed bottom-4 right-4 inline-flex min-h-12 items-center gap-2 rounded-full bg-brand px-5 font-extrabold text-white shadow-[0_12px_30px_rgba(43,36,32,0.30)]"
+        >
+          <Icon name="whatsapp" size={20} />
+          Falar no WhatsApp
+        </a>
+      )
+    }
   </body>
 </html>
