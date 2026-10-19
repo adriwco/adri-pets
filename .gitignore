@@ -30,3 +30,6 @@ playwright-report/
 
 # fotos originais da galeria
 media-inbox/
+
+# especificação privada (link local para o repositório de planos)
+docs/ESPEC.md
