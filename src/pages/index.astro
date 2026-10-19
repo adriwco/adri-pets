@@ -1,4 +1,5 @@
 ---
+import { Icon, type IconName } from "../components/Icon";
 import { siteConfig } from "../config/site.config";
 import { buildFaq } from "../content/faq";
 import { formatCurrency } from "../domain/money";
@@ -13,29 +14,19 @@ const priceSentence =
     : `Diárias a partir de ${formatCurrency(lowestRate)}.`;
 const faq = buildFaq(siteConfig);
 
-const routine = [
-  {
-    title: "Casa de família, sem baias",
-    text: `Os cães ficam soltos dentro de casa. No máximo ${capacity.maxPetsPerBooking} por vez.`,
-  },
-  {
-    title: "Passeio com o chão fresquinho",
-    text: "Todo fim de tarde, quando o chão já esfriou, e às vezes bem cedo pela manhã.",
-  },
-  {
-    title: "Remédio na hora certa",
-    text: "Comprimidos e pomadas nos horários combinados com você.",
-  },
-  {
-    title: "Banho com leva e traz",
-    text: "Levo e busco no pet shop parceiro, sem custo. Você paga só o banho.",
-  },
+const chips = [`Máx. ${capacity.maxPetsPerBooking} pets`, "Sem baias", "Saída até meia-noite"];
+
+const routine: { icon: IconName; title: string; text: string }[] = [
+  { icon: "house", title: "Casa, sem baias", text: "Soltos, no sofá e no quintal." },
+  { icon: "sun", title: "Passeio fresquinho", text: "No fim da tarde, sem queimar as patas." },
+  { icon: "pill", title: "Remédio na hora", text: "Comprimido e pomada, como combinado." },
+  { icon: "bath", title: "Banho com leva e traz", text: "Levo e busco, sem custo." },
 ];
 
 const steps = [
-  "Faça o orçamento no site: datas, pets e o valor na hora.",
-  "Envie pelo WhatsApp com um toque. A mensagem já vai pronta.",
-  "Eu confirmo a vaga e combinamos a chegada.",
+  { title: "Simule", text: "Datas, pets e o valor na hora, no PIX ou no cartão." },
+  { title: "Envie", text: "Um toque e a mensagem chega pronta no meu WhatsApp." },
+  { title: "Combine", text: "Eu confirmo a vaga e a gente acerta a chegada." },
 ];
 ---
 
@@ -43,58 +34,95 @@ const steps = [
   title={business.name}
   description={`Hospedagem familiar para cães em ${business.city}: sem baias, no máximo ${capacity.maxPetsPerBooking} pets por vez. Faça o orçamento na hora.`}
 >
-  <section class="py-6 sm:py-12">
-    <p class="text-sm font-semibold uppercase tracking-wide text-brand-strong">{business.city} · {business.state}</p>
-    <h1 class="mt-2 text-3xl font-bold leading-tight text-ink sm:text-5xl">
-      Hospedagem familiar para o seu cão, como se fosse da casa
-    </h1>
-    <p class="mt-4 max-w-2xl text-lg text-muted">
-      Sem baias e com no máximo {capacity.maxPetsPerBooking} pets por vez, para que cada um tenha atenção de verdade.
-      {priceSentence}
-    </p>
-    <div class="mt-6 flex max-w-md flex-col gap-3 sm:flex-row">
-      <a href="/orcamento" class="btn-primary">Fazer orçamento agora</a>
+  <section class="mx-auto grid max-w-5xl items-center gap-8 px-5 pt-2 lg:grid-cols-2 lg:gap-12 lg:pt-8">
+    <div class="relative order-first h-72 sm:h-80 lg:order-last lg:h-[420px]" aria-hidden="true">
+      <div class="absolute -right-10 -top-2 size-56 rounded-full bg-sun lg:size-72"></div>
+      <div
+        class="absolute inset-x-0 bottom-4 top-5 flex items-center justify-center bg-sand"
+        style="border-radius: 48% 52% 44% 56% / 55% 48% 52% 45%;"
+      >
+        <Icon name="paw" size={120} class="text-accent opacity-90" />
+      </div>
+      <div class="absolute bottom-0 left-3 flex items-center gap-2.5 rounded-2xl bg-white px-3.5 py-2.5 shadow-[0_8px_24px_rgba(122,78,45,0.18)]">
+        <Icon name="sun" size={26} class="text-accent" />
+        <span class="text-[13px] font-bold leading-tight text-ink">Passeio no fim da tarde,<br />com o chão fresquinho</span>
+      </div>
+    </div>
+
+    <div class="flex flex-col gap-4">
+      <h1 class="text-[34px] font-semibold sm:text-5xl">Seu cão em casa de família, como se fosse daqui</h1>
+      <p class="text-[17px] text-muted sm:text-lg">
+        Sem baias e com no máximo {capacity.maxPetsPerBooking} pets por vez, em {business.city}. {priceSentence}
+      </p>
+      <ul class="flex flex-wrap gap-2" aria-label="Destaques">
+        {chips.map((chip) => <li class="chip">{chip}</li>)}
+      </ul>
+      <a href="/orcamento" class="btn-primary mt-1 sm:max-w-sm">
+        Fazer orçamento agora
+        <Icon name="arrow-right" size={20} />
+      </a>
     </div>
   </section>
 
-  <section class="py-8" aria-labelledby="rotina">
-    <h2 id="rotina" class="text-2xl font-bold text-ink">Como é a rotina</h2>
-    <ul class="mt-4 grid gap-4 sm:grid-cols-2">
-      {
-        routine.map((item) => (
-          <li class="card">
-            <h3 class="font-semibold text-ink">{item.title}</h3>
-            <p class="mt-1 text-muted">{item.text}</p>
-          </li>
-        ))
-      }
-    </ul>
+  <svg class="mt-12 block h-14 w-full" viewBox="0 0 390 56" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0 30 C 70 0, 140 56, 210 26 S 330 4, 390 28 L 390 56 L 0 56 Z" fill="var(--brand-primary)"></path>
+  </svg>
+  <section class="bg-brand pb-10 pt-2 text-surface" aria-labelledby="rotina">
+    <div class="mx-auto max-w-5xl px-5">
+      <h2 id="rotina" class="text-[26px] font-semibold text-surface sm:text-3xl">Como é o dia por aqui</h2>
+      <ul class="mt-5 grid grid-cols-2 gap-3 lg:grid-cols-4">
+        {
+          routine.map((item) => (
+            <li class="flex flex-col gap-2 rounded-3xl bg-white/10 p-4">
+              <Icon name={item.icon} size={30} class="text-[#FFC48C]" />
+              <strong class="text-[15px]">{item.title}</strong>
+              <span class="text-[13px] leading-snug text-on-brand-muted">{item.text}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
   </section>
+  <svg class="block h-10 w-full" viewBox="0 0 390 40" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0 0 L390 0 L390 14 C 320 40, 250 2, 180 22 S 60 34, 0 12 Z" fill="var(--brand-primary)"></path>
+  </svg>
 
-  <section class="py-8" aria-labelledby="como-funciona">
-    <h2 id="como-funciona" class="text-2xl font-bold text-ink">Como reservar</h2>
-    <ol class="mt-4 grid gap-4 sm:grid-cols-3">
+  <section class="mx-auto max-w-5xl px-5 pt-10" aria-labelledby="como-reservar">
+    <h2 id="como-reservar" class="text-[26px] font-semibold sm:text-3xl">Como reservar</h2>
+    <ol class="mt-5 grid gap-3 sm:grid-cols-3">
       {
         steps.map((step, index) => (
-          <li class="card">
-            <span class="inline-flex size-8 items-center justify-center rounded-full bg-brand-soft font-bold text-brand-strong">
+          <li class="card flex gap-4 sm:flex-col">
+            <span class="flex size-10 shrink-0 items-center justify-center rounded-full bg-accent font-display text-lg font-bold text-white">
               {index + 1}
             </span>
-            <p class="mt-2 text-ink">{step}</p>
+            <div>
+              <strong class="font-display text-lg text-brand">{step.title}</strong>
+              <p class="text-muted">{step.text}</p>
+            </div>
           </li>
         ))
       }
     </ol>
+    <a href="/orcamento" class="btn-brand mt-6 sm:max-w-sm">
+      Começar a simulação
+      <Icon name="arrow-right" size={20} />
+    </a>
   </section>
 
-  <section class="py-8" aria-labelledby="perguntas">
-    <h2 id="perguntas" class="text-2xl font-bold text-ink">Perguntas frequentes</h2>
-    <div class="mt-4 space-y-3">
+  <section class="mx-auto max-w-5xl px-5 pt-14" aria-labelledby="perguntas">
+    <h2 id="perguntas" class="text-[26px] font-semibold sm:text-3xl">Perguntas frequentes</h2>
+    <div class="mt-5 space-y-3">
       {
         faq.map((item) => (
-          <details class="card">
-            <summary class="cursor-pointer font-semibold text-ink">{item.question}</summary>
-            <p class="mt-2 text-muted">{item.answer}</p>
+          <details class="card group">
+            <summary class="flex cursor-pointer list-none items-center justify-between gap-4 font-bold text-ink">
+              {item.question}
+              <span class="flex size-8 shrink-0 items-center justify-center rounded-full bg-accent-soft text-accent transition group-open:rotate-45">
+                <Icon name="plus" size={18} />
+              </span>
+            </summary>
+            <p class="mt-3 text-muted">{item.answer}</p>
           </details>
         ))
       }
