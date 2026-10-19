@@ -1,0 +1,103 @@
+---
+import { siteConfig } from "../config/site.config";
+import { buildFaq } from "../content/faq";
+import { formatCurrency } from "../domain/money";
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const { business, capacity, prices } = siteConfig;
+const rates = Object.values(prices.rateCents);
+const lowestRate = Math.min(...rates);
+const priceSentence =
+  lowestRate === Math.max(...rates)
+    ? `Diária de ${formatCurrency(lowestRate)} por pet, de qualquer porte.`
+    : `Diárias a partir de ${formatCurrency(lowestRate)}.`;
+const faq = buildFaq(siteConfig);
+
+const routine = [
+  {
+    title: "Casa de família, sem baias",
+    text: `Os cães ficam soltos dentro de casa. No máximo ${capacity.maxPetsPerBooking} por vez.`,
+  },
+  {
+    title: "Passeio com o chão fresquinho",
+    text: "Todo fim de tarde, quando o chão já esfriou, e às vezes bem cedo pela manhã.",
+  },
+  {
+    title: "Remédio na hora certa",
+    text: "Comprimidos e pomadas nos horários combinados com você.",
+  },
+  {
+    title: "Banho com leva e traz",
+    text: "Levo e busco no pet shop parceiro, sem custo. Você paga só o banho.",
+  },
+];
+
+const steps = [
+  "Faça o orçamento no site: datas, pets e o valor na hora.",
+  "Envie pelo WhatsApp com um toque. A mensagem já vai pronta.",
+  "Eu confirmo a vaga e combinamos a chegada.",
+];
+---
+
+<BaseLayout
+  title={business.name}
+  description={`Hospedagem familiar para cães em ${business.city}: sem baias, no máximo ${capacity.maxPetsPerBooking} pets por vez. Faça o orçamento na hora.`}
+>
+  <section class="py-6 sm:py-12">
+    <p class="text-sm font-semibold uppercase tracking-wide text-brand-strong">{business.city} · {business.state}</p>
+    <h1 class="mt-2 text-3xl font-bold leading-tight text-ink sm:text-5xl">
+      Hospedagem familiar para o seu cão, como se fosse da casa
+    </h1>
+    <p class="mt-4 max-w-2xl text-lg text-muted">
+      Sem baias e com no máximo {capacity.maxPetsPerBooking} pets por vez, para que cada um tenha atenção de verdade.
+      {priceSentence}
+    </p>
+    <div class="mt-6 flex max-w-md flex-col gap-3 sm:flex-row">
+      <a href="/orcamento" class="btn-primary">Fazer orçamento agora</a>
+    </div>
+  </section>
+
+  <section class="py-8" aria-labelledby="rotina">
+    <h2 id="rotina" class="text-2xl font-bold text-ink">Como é a rotina</h2>
+    <ul class="mt-4 grid gap-4 sm:grid-cols-2">
+      {
+        routine.map((item) => (
+          <li class="card">
+            <h3 class="font-semibold text-ink">{item.title}</h3>
+            <p class="mt-1 text-muted">{item.text}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <section class="py-8" aria-labelledby="como-funciona">
+    <h2 id="como-funciona" class="text-2xl font-bold text-ink">Como reservar</h2>
+    <ol class="mt-4 grid gap-4 sm:grid-cols-3">
+      {
+        steps.map((step, index) => (
+          <li class="card">
+            <span class="inline-flex size-8 items-center justify-center rounded-full bg-brand-soft font-bold text-brand-strong">
+              {index + 1}
+            </span>
+            <p class="mt-2 text-ink">{step}</p>
+          </li>
+        ))
+      }
+    </ol>
+  </section>
+
+  <section class="py-8" aria-labelledby="perguntas">
+    <h2 id="perguntas" class="text-2xl font-bold text-ink">Perguntas frequentes</h2>
+    <div class="mt-4 space-y-3">
+      {
+        faq.map((item) => (
+          <details class="card">
+            <summary class="cursor-pointer font-semibold text-ink">{item.question}</summary>
+            <p class="mt-2 text-muted">{item.answer}</p>
+          </details>
+        ))
+      }
+    </div>
+  </section>
+</BaseLayout>
