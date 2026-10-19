@@ -1,0 +1,76 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-brand: var(--brand-primary);
+  --color-brand-soft: color-mix(in oklab, var(--brand-primary) 14%, white);
+  --color-brand-strong: color-mix(in oklab, var(--brand-primary) 55%, black);
+  --color-accent-soft: color-mix(in oklab, var(--brand-secondary) 16%, white);
+  --color-accent-line: color-mix(in oklab, var(--brand-secondary) 45%, white);
+  --color-ink: #1f2a24;
+  --color-muted: #55615a;
+  --color-surface: #fffdf8;
+  --color-line: #e7e1d6;
+}
+
+@layer base {
+  html {
+    background: var(--color-surface);
+    color: var(--color-ink);
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    font-family: ui-rounded, "SF Pro Rounded", "Segoe UI", system-ui, sans-serif;
+    line-height: 1.55;
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--color-brand-strong);
+    outline-offset: 2px;
+  }
+}
+
+@layer components {
+  .card {
+    @apply rounded-2xl border border-line bg-white p-5 shadow-sm;
+  }
+
+  .field {
+    @apply flex flex-col gap-1.5 text-sm font-medium text-ink;
+  }
+
+  .field input,
+  .field select,
+  .field textarea {
+    @apply w-full rounded-xl border border-line bg-white px-3 py-2.5 text-base font-normal text-ink;
+  }
+
+  .choice {
+    @apply cursor-pointer;
+  }
+
+  .choice span {
+    @apply inline-flex min-h-11 items-center rounded-full border border-line bg-white px-4 text-sm text-ink transition-colors;
+  }
+
+  .choice input:checked + span {
+    @apply border-brand-strong bg-brand-soft font-semibold text-brand-strong;
+  }
+
+  .choice input:focus-visible + span {
+    outline: 3px solid var(--color-brand-strong);
+    outline-offset: 2px;
+  }
+
+  .note {
+    @apply rounded-xl border border-accent-line bg-accent-soft px-4 py-3 text-sm text-ink;
+  }
+
+  .btn-primary {
+    @apply flex min-h-12 w-full items-center justify-center rounded-full bg-brand-strong px-6 text-center text-base font-semibold text-white shadow-sm transition hover:brightness-110;
+  }
+
+  .btn-secondary {
+    @apply inline-flex min-h-11 items-center justify-center rounded-full border border-line bg-white px-5 text-sm font-medium text-ink transition hover:bg-brand-soft;
+  }
+}
