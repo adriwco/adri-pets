@@ -110,10 +110,20 @@ export interface QuoteView {
 
 export type ActionStatus = "idle" | "copied" | "copy-failed" | "shared";
 
+export type SimulatorStep = 1 | 2 | 3;
+
+export const SIMULATOR_STEPS: { step: SimulatorStep; label: string }[] = [
+  { step: 1, label: "Datas" },
+  { step: 2, label: "Pets" },
+  { step: 3, label: "Valor" },
+];
+
 export function useQuoteSimulator(config: SiteConfig) {
   const [form, setForm] = useState<SimulatorForm>(initialForm);
   const [restored, setRestored] = useState(false);
   const [actionStatus, setActionStatus] = useState<ActionStatus>("idle");
+  const [step, setStep] = useState<SimulatorStep>(1);
+  const [stepError, setStepError] = useState<string | null>(null);
   const today = useMemo(() => todayInTimeZone(new Date(), config.business.timeZone), [config.business.timeZone]);
 
   useEffect(() => {
@@ -174,6 +184,8 @@ export function useQuoteSimulator(config: SiteConfig) {
 
   const reset = useCallback(() => {
     setActionStatus("idle");
+    setStepError(null);
+    setStep(1);
     setForm(initialForm());
   }, []);
 
@@ -304,8 +316,36 @@ export function useQuoteSimulator(config: SiteConfig) {
     }
   }, [quoteView, canShare]);
 
+  const datesError = datesReady && outcome && !outcome.ok && outcome.code !== "SEM_PETS" && outcome.code !== "MAX_PETS";
+
+  const goToStep = useCallback(
+    (target: SimulatorStep) => {
+      if (target > 1 && !datesReady) {
+        setStepError("Escolha as datas para continuar.");
+        setStep(1);
+        return;
+      }
+      if (target > 1 && datesError) {
+        setStepError(null);
+        setStep(1);
+        return;
+      }
+      setStepError(null);
+      setStep(target);
+    },
+    [datesReady, datesError],
+  );
+
+  const nextStep = useCallback(() => goToStep(Math.min(step + 1, 3) as SimulatorStep), [goToStep, step]);
+  const previousStep = useCallback(() => goToStep(Math.max(step - 1, 1) as SimulatorStep), [goToStep, step]);
+
   return {
     form,
+    step,
+    stepError,
+    goToStep,
+    nextStep,
+    previousStep,
     today,
     maxCheckInDate: addDays(today, config.rules.bookingHorizonDays),
     canAddPet: form.pets.length < config.capacity.maxPetsPerBooking,
