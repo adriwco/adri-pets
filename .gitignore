@@ -33,3 +33,6 @@ media-inbox/
 
 # especificação privada (link local para o repositório de planos)
 docs/ESPEC.md
+
+# cache local do wrangler (Cloudflare)
+.wrangler/
