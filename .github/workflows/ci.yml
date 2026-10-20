@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  verificar:
+  verify:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
@@ -24,13 +24,13 @@ jobs:
       - run: pnpm exec playwright install --with-deps chromium
       - run: pnpm test:e2e
 
-  publicar:
-    needs: verificar
+  deploy:
+    needs: verify
     if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     timeout-minutes: 10
     concurrency:
-      group: publicar-site
+      group: deploy-site
       cancel-in-progress: false
     environment:
       name: production
