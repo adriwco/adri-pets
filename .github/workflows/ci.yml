@@ -33,7 +33,7 @@ jobs:
       group: publicar-site
       cancel-in-progress: false
     environment:
-      name: producao
+      name: production
       url: https://adri-pets.adri-pets.workers.dev
     steps:
       - uses: actions/checkout@v4
