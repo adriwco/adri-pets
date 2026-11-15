@@ -4,6 +4,7 @@ import { siteConfig } from "../config/site.config";
 import { buildFaq } from "../content/faq";
 import { formatCurrency } from "../domain/money";
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { splitIntoWords } from "../cinema/splitIntoWords";
 
 const { business, capacity, prices } = siteConfig;
 const rates = Object.values(prices.rateCents);
@@ -13,6 +14,9 @@ const priceSentence =
     ? `Diária de ${formatCurrency(lowestRate)} por pet, de qualquer porte.`
     : `Diárias a partir de ${formatCurrency(lowestRate)}.`;
 const faq = buildFaq(siteConfig);
+
+const heroTitle = "Seu cão em casa de família, como se fosse daqui";
+const heroWords = splitIntoWords(heroTitle);
 
 const chips = [`Máx. ${capacity.maxPetsPerBooking} pets`, "Sem baias", "Saída até meia-noite"];
 
@@ -34,30 +38,42 @@ const steps = [
   title={business.name}
   description={`Hospedagem familiar para cães em ${business.city}: sem baias, no máximo ${capacity.maxPetsPerBooking} pets por vez. Faça o orçamento na hora.`}
 >
-  <section class="mx-auto grid max-w-5xl items-center gap-8 px-5 pt-2 lg:grid-cols-2 lg:gap-12 lg:pt-8">
-    <div class="relative order-first h-72 sm:h-80 lg:order-last lg:h-[420px]" aria-hidden="true">
-      <div class="absolute -right-10 -top-2 size-56 rounded-full bg-sun lg:size-72"></div>
+  <section class="hero-intro mx-auto grid max-w-5xl items-center gap-8 px-5 pt-2 lg:grid-cols-2 lg:gap-12 lg:pt-8" data-cinema-scene="home">
+    <div class="hero-art relative order-first h-72 sm:h-80 lg:order-last lg:h-[420px]" aria-hidden="true">
+      <div class="hero-light" data-hero-light></div>
+      <div class="hero-sun absolute -right-10 -top-2 size-56 rounded-full bg-sun lg:size-72"></div>
       <div
-        class="absolute inset-x-0 bottom-4 top-5 flex items-center justify-center bg-sand"
+        class="hero-blob absolute inset-x-0 bottom-4 top-5 flex items-center justify-center bg-sand"
         style="border-radius: 48% 52% 44% 56% / 55% 48% 52% 45%;"
       >
-        <Icon name="paw" size={120} class="text-accent opacity-90" />
+        <span class="hero-paw inline-flex"><Icon name="paw" size={120} class="text-accent opacity-90" /></span>
       </div>
-      <div class="absolute bottom-0 left-3 flex items-center gap-2.5 rounded-2xl bg-white px-3.5 py-2.5 shadow-[0_8px_24px_rgba(122,78,45,0.18)]">
+      <div class="hero-card absolute bottom-0 left-3 flex items-center gap-2.5 rounded-2xl bg-white px-3.5 py-2.5 shadow-[0_8px_24px_rgba(122,78,45,0.18)]">
         <Icon name="sun" size={26} class="text-accent" />
         <span class="text-[13px] font-bold leading-tight text-ink">Passeio no fim da tarde,<br />com o chão fresquinho</span>
       </div>
     </div>
 
-    <div class="flex flex-col gap-4">
-      <h1 class="text-[34px] font-semibold sm:text-5xl">Seu cão em casa de família, como se fosse daqui</h1>
-      <p class="text-[17px] text-muted sm:text-lg">
+    <div class="hero-copy flex flex-col gap-4">
+      <h1 class="page-title text-[34px] font-semibold sm:text-5xl">
+        {
+          heroWords.map(({ word, index }) => (
+            <Fragment>
+              {index > 0 && " "}
+              <span class="cine-line">
+                <span class="cine-word" style={`--i: ${index}`}>{word}</span>
+              </span>
+            </Fragment>
+          ))
+        }
+      </h1>
+      <p class="cine-lead text-[17px] text-muted sm:text-lg">
         Sem baias e com no máximo {capacity.maxPetsPerBooking} pets por vez, em {business.city}. {priceSentence}
       </p>
       <ul class="flex flex-wrap gap-2" aria-label="Destaques">
-        {chips.map((chip) => <li class="chip">{chip}</li>)}
+        {chips.map((chip, index) => <li class="chip cine-chip" style={`--i: ${index}`}>{chip}</li>)}
       </ul>
-      <a href="/orcamento" class="btn-primary mt-1 sm:max-w-sm">
+      <a href="/orcamento" class="btn-primary cine-cta mt-1 sm:max-w-sm">
         Fazer orçamento agora
         <Icon name="arrow-right" size={20} />
       </a>
@@ -73,7 +89,7 @@ const steps = [
       <ul class="mt-5 grid grid-cols-2 gap-3 lg:grid-cols-4">
         {
           routine.map((item) => (
-            <li class="flex flex-col gap-2 rounded-3xl bg-white/10 p-4">
+            <li class="routine-card cine-reveal flex flex-col gap-2 rounded-3xl bg-white/10 p-4">
               <Icon name={item.icon} size={30} class="text-[#FFC48C]" />
               <strong class="text-[15px]">{item.title}</strong>
               <span class="text-[13px] leading-snug text-on-brand-muted">{item.text}</span>
@@ -92,7 +108,7 @@ const steps = [
     <ol class="mt-5 grid gap-3 sm:grid-cols-3">
       {
         steps.map((step, index) => (
-          <li class="card flex gap-4 sm:flex-col">
+          <li class="step-card cine-reveal card flex gap-4 sm:flex-col">
             <span class="flex size-10 shrink-0 items-center justify-center rounded-full bg-accent font-display text-lg font-bold text-white">
               {index + 1}
             </span>
@@ -115,7 +131,7 @@ const steps = [
     <div class="mt-5 space-y-3">
       {
         faq.map((item) => (
-          <details class="card group">
+          <details class="faq-card cine-reveal card group">
             <summary class="flex cursor-pointer list-none items-center justify-between gap-4 font-bold text-ink">
               {item.question}
               <span class="flex size-8 shrink-0 items-center justify-center rounded-full bg-accent-soft text-accent transition group-open:rotate-45">

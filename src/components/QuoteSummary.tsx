@@ -57,8 +57,8 @@ export function QuoteSummary({ vm, config }: QuoteSummaryProps) {
     quote.serviceType === "CRECHE" ? "Creche" : `${quote.nights} ${quote.nights === 1 ? "diária" : "diárias"}`;
 
   return (
-    <div class="overflow-hidden rounded-3xl bg-white shadow-[0_10px_28px_rgba(122,78,45,0.14)]" aria-live="polite">
-      <div class="flex items-center justify-between gap-3 bg-accent px-5 py-3.5 text-white">
+    <div class="ticket-reveal overflow-hidden rounded-3xl bg-white shadow-[0_10px_28px_rgba(122,78,45,0.14)]" aria-live="polite">
+      <div class="ticket-shine flex items-center justify-between gap-3 bg-accent px-5 py-3.5 text-white">
         <span class="font-display text-lg font-semibold">{ticketTitle}</span>
         <span class="shrink-0 text-sm font-bold">{stayLabel}</span>
       </div>

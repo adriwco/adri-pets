@@ -64,7 +64,7 @@ export function QuoteSimulator({ config }: QuoteSimulatorProps) {
       </ol>
 
       <div class="grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,24rem)] lg:items-start">
-        <form class="space-y-5" onSubmit={(event) => event.preventDefault()} noValidate>
+        <form key={vm.step} class="cine-step space-y-5" onSubmit={(event) => event.preventDefault()} noValidate>
           {vm.step === 1 && (
             <>
               {rules.daycareEnabled && (

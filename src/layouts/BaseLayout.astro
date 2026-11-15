@@ -33,7 +33,7 @@ const year = new Date().getFullYear();
     <a href="#conteudo" class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:rounded focus:bg-white focus:p-2">
       Pular para o conteúdo
     </a>
-    <header class="mx-auto flex max-w-5xl items-center justify-between gap-4 px-5 py-4">
+    <header class="site-header mx-auto flex max-w-5xl items-center justify-between gap-4 px-5 py-4">
       <a href="/" class="flex items-center gap-2 no-underline">
         <Icon name="paw" size={28} class="text-accent" />
         <span class="font-display text-[22px] font-bold text-brand">{business.name}</span>
@@ -52,6 +52,8 @@ const year = new Date().getFullYear();
         </a>
       </nav>
     </header>
+
+    <div class="site-grain" aria-hidden="true"></div>
 
     <main id="conteudo">
       <slot />
@@ -81,5 +83,10 @@ const year = new Date().getFullYear();
         </a>
       )
     }
+    <script>
+      import { scheduleCinema } from "../cinema/scheduleCinema";
+
+      scheduleCinema();
+    </script>
   </body>
 </html>

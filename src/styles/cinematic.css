@@ -1,0 +1,269 @@
+@view-transition {
+  navigation: auto;
+}
+
+:root {
+  --ease-cine: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.site-header {
+  view-transition-name: site-header;
+}
+
+.page-title {
+  view-transition-name: page-title;
+}
+
+.site-grain {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0.05;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.cine-line {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  padding: 0 0.06em 0.12em 0;
+  margin: 0 -0.06em -0.12em 0;
+}
+
+.cine-word {
+  display: inline-block;
+}
+
+.hero-art {
+  isolation: isolate;
+}
+
+.hero-light {
+  position: absolute;
+  inset: -12% -18% -8% -18%;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.hero-light canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  opacity: 0.8;
+  animation: cine-fade 2.6s var(--ease-cine) backwards;
+}
+
+.hero-sun {
+  box-shadow: 0 0 80px 30px color-mix(in srgb, var(--color-sun) 55%, transparent);
+}
+
+.ticket-shine {
+  position: relative;
+  overflow: hidden;
+}
+
+.ticket-shine::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  background: linear-gradient(105deg, transparent 30%, rgb(255 255 255 / 0.55) 50%, transparent 70%);
+  transform: translateX(-100%);
+}
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+html.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-stopped {
+  overflow: clip;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  ::view-transition-old(root) {
+    animation: cine-scene-out 0.32s var(--ease-cine) both;
+  }
+
+  ::view-transition-new(root) {
+    animation: cine-scene-in 0.7s var(--ease-cine) 0.06s both;
+  }
+
+  ::view-transition-group(page-title) {
+    animation-duration: 0.8s;
+    animation-timing-function: var(--ease-cine);
+  }
+
+  ::view-transition-group(site-header),
+  ::view-transition-old(site-header),
+  ::view-transition-new(site-header) {
+    animation: none;
+  }
+
+  .hero-intro .cine-word {
+    animation: cine-rise 1s var(--ease-cine) both;
+    animation-delay: calc(120ms + var(--i) * 65ms);
+  }
+
+  .hero-intro .cine-lead {
+    animation: cine-fade-up 0.9s var(--ease-cine) 0.65s both;
+  }
+
+  .hero-intro .cine-chip {
+    animation: cine-pop 0.6s var(--ease-bounce) both;
+    animation-delay: calc(0.85s + var(--i) * 90ms);
+  }
+
+  .hero-intro .cine-cta {
+    animation: cine-fade-up 0.9s var(--ease-cine) 1.15s both;
+  }
+
+  .hero-intro .hero-sun {
+    animation:
+      cine-sunrise 1.8s var(--ease-cine) 0.15s backwards,
+      cine-sun-glow 6s ease-in-out 2s infinite alternate;
+  }
+
+  .hero-intro .hero-blob {
+    animation:
+      cine-blob-in 1.2s var(--ease-cine) 0.3s backwards,
+      cine-blob-breathe 14s ease-in-out 1.5s infinite alternate;
+  }
+
+  .hero-intro .hero-paw {
+    animation: cine-stamp 0.7s var(--ease-bounce) 0.95s backwards;
+  }
+
+  .hero-intro .hero-card {
+    animation: cine-slide-in 1s var(--ease-cine) 1.35s backwards;
+  }
+
+  .cine-step {
+    animation: cine-scene-in 0.6s var(--ease-cine) both;
+  }
+
+  .ticket-reveal {
+    animation: cine-print 0.9s var(--ease-cine) both;
+  }
+
+  .ticket-reveal .ticket-shine::after {
+    animation: cine-shine 1.4s var(--ease-cine) 0.55s both;
+  }
+
+  @supports (animation-timeline: view()) {
+    html:not(.cinema-ready) .cine-reveal {
+      animation: cine-fade-up linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 60%;
+    }
+  }
+}
+
+@keyframes cine-scene-out {
+  to {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes cine-scene-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+}
+
+@keyframes cine-rise {
+  from {
+    transform: translateY(110%);
+  }
+}
+
+@keyframes cine-fade {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes cine-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+}
+
+@keyframes cine-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+}
+
+@keyframes cine-sunrise {
+  from {
+    opacity: 0;
+    transform: translateY(45%) scale(0.85);
+  }
+}
+
+@keyframes cine-sun-glow {
+  to {
+    box-shadow: 0 0 120px 50px color-mix(in srgb, var(--color-sun) 70%, transparent);
+  }
+}
+
+@keyframes cine-blob-in {
+  from {
+    opacity: 0;
+    transform: scale(0.88);
+  }
+}
+
+@keyframes cine-blob-breathe {
+  to {
+    border-radius: 54% 46% 52% 48% / 46% 55% 45% 54%;
+  }
+}
+
+@keyframes cine-stamp {
+  from {
+    opacity: 0;
+    transform: scale(1.8) rotate(-18deg);
+  }
+}
+
+@keyframes cine-slide-in {
+  from {
+    opacity: 0;
+    transform: translateX(-28px);
+  }
+}
+
+@keyframes cine-print {
+  from {
+    clip-path: inset(0 0 100% 0 round 1.5rem);
+    transform: translateY(-10px);
+  }
+  to {
+    clip-path: inset(0 0 0 0 round 1.5rem);
+  }
+}
+
+@keyframes cine-shine {
+  0% {
+    opacity: 1;
+    transform: translateX(-100%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(100%);
+  }
+}

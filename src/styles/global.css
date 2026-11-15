@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "./cinematic.css";
 
 @theme inline {
   --font-display: "Fredoka Variable", ui-rounded, system-ui, sans-serif;
