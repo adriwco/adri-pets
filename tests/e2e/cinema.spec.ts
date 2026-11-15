@@ -15,6 +15,12 @@ test("home abre com a camada cinematográfica sem erros", async ({ page }) => {
   expect(errors).toEqual([]);
 });
 
+test("pegadas de pata atravessam a página por trás do conteúdo", async ({ page }) => {
+  await page.goto("/");
+  await expect(page.locator(".paw-trail .paw-print").first()).toBeAttached({ timeout: 10000 });
+  await expect(page.locator(".paw-trail")).toHaveCSS("pointer-events", "none");
+});
+
 test("os cartões da rotina aparecem ao rolar até eles", async ({ page }) => {
   await page.goto("/");
   await expect(page.locator("html")).toHaveClass(/cinema-ready/);
@@ -39,6 +45,7 @@ test.describe("com movimento reduzido", () => {
     await page.waitForTimeout(800);
     await expect(page.locator("html")).not.toHaveClass(/cinema-ready/);
     await expect(page.locator("[data-hero-light] canvas")).toHaveCount(0);
+    await expect(page.locator(".paw-trail")).toHaveCount(0);
     await expect(page.locator(".routine-card").first()).toHaveCSS("opacity", "1");
   });
 });

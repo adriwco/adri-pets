@@ -64,6 +64,14 @@
     @apply rounded-3xl bg-white p-5 shadow-[0_6px_20px_rgba(122,78,45,0.10)];
   }
 
+  .site-header,
+  main > :not(svg, .bg-brand),
+  main > .bg-brand > *,
+  footer > * {
+    position: relative;
+    z-index: 2;
+  }
+
   .field {
     @apply flex flex-col gap-1.5 text-sm font-bold text-ink;
   }

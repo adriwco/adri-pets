@@ -3,6 +3,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Lenis from "lenis";
 import { mountGoldenLight } from "./goldenLight";
 import { buildHomeScene } from "./homeScene";
+import { mountPawTrail } from "./mountPawTrail";
 
 export function startCinema(): void {
   gsap.registerPlugin(ScrollTrigger);
@@ -18,4 +19,6 @@ export function startCinema(): void {
 
   const lightHost = document.querySelector<HTMLElement>("[data-hero-light]");
   if (lightHost) mountGoldenLight(lightHost, document.querySelector<HTMLElement>(".hero-sun"));
+
+  mountPawTrail();
 }
