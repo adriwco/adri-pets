@@ -8,6 +8,8 @@
 
 No máximo 3 pets por vez, sem baias, como se fossem da casa.
 
+**Site:** [adri-pets.adri-pets.workers.dev](https://adri-pets.adri-pets.workers.dev)
+
 [![CI](https://github.com/adriwco/adri-pets/actions/workflows/ci.yml/badge.svg)](https://github.com/adriwco/adri-pets/actions/workflows/ci.yml)
 ![Astro](https://img.shields.io/badge/Astro-7-FF5D01?logo=astro&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/TypeScript-strictest-3178C6?logo=typescript&logoColor=white)
@@ -48,7 +50,7 @@ Por isso não há banco de dados, login nem servidor: é um site estático, ráp
   - rolagem suave, paralaxe no topo e cartões entrando ao rolar;
   - luz dourada com poeira em WebGL, nas cores do tema.
 
-  Tudo some com "reduzir movimento" ou com a economia de dados ligada, e o código da etapa mais pesada só carrega depois que a página aparece.
+  Com "reduzir movimento" ligado no aparelho, todos os efeitos são desligados. Com a economia de dados ligada, a rolagem suave, as cenas e a luz em WebGL não carregam. Esse código mais pesado só é baixado depois que a página aparece.
 
 <p align="center">
   <img src="docs/screenshots/home-computador.webp" width="820" alt="Página inicial no computador">
@@ -65,10 +67,11 @@ Por isso não há banco de dados, login nem servidor: é um site estático, ráp
 | Validação | [Zod](https://zod.dev) (a configuração inválida impede o build) |
 | Testes | [Vitest](https://vitest.dev), [fast-check](https://fast-check.dev) e [Playwright](https://playwright.dev) |
 | Qualidade | TypeScript no modo mais estrito, ESLint e CI no GitHub Actions |
+| Publicação | [Cloudflare Workers](https://developers.cloudflare.com/workers/static-assets/) servindo os arquivos estáticos |
 
 ## Como rodar
 
-Requisitos: Node.js 22 e npm.
+Requisitos: Node.js 22.22 ou superior e npm.
 
 ```bash
 npm install
@@ -81,9 +84,9 @@ O site abre em http://localhost:4321.
 |---|---|
 | `npm run dev` | Servidor local |
 | `npm run check` | Tipos (`astro check`) e lint |
-| `npm test` | Testes do motor de orçamento |
-| `npm run test:coverage` | Testes com cobertura mínima obrigatória |
-| `npm run test:e2e` | Simulador no navegador, no celular e no computador |
+| `npm test` | Testes unitários do motor de orçamento e da camada cinematográfica |
+| `npm run test:coverage` | Testes com cobertura mínima obrigatória do motor de orçamento |
+| `npm run test:e2e` | Simulador e camada cinematográfica no navegador, no celular e no computador |
 | `npm run build` | Gera o site estático em `dist/` |
 
 ## Configuração
@@ -97,6 +100,10 @@ Tudo o que muda no dia a dia fica em um único arquivo, [`src/config/site.config
 - datas lotadas e datas com última vaga.
 
 A configuração é validada no build. Um valor inválido (preço negativo, data inexistente, telefone fora do padrão) faz o build falhar, e a versão anterior do site continua no ar.
+
+## Publicação
+
+A cada push na `main` e em cada pull request, o GitHub Actions roda tipos e lint, os testes com cobertura, o build e os testes no navegador. Quando tudo passa na `main`, o site é publicado automaticamente na Cloudflare. Se alguma etapa falhar, nada é publicado.
 
 ## Arquitetura
 
