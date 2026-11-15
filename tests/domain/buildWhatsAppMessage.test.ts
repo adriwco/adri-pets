@@ -75,7 +75,7 @@ describe("buildBookingMessage", () => {
     const { text } = buildBookingMessage(messageInput([petAnswers()]));
     expect(text).toBe(
       [
-        "Olá! 🐾 Fiz uma simulação no site da Adri Pets:",
+        "Olá! Fiz uma simulação no site da Adri Pets:",
         "*Entrada:* 10/03/2026 | *Saída:* 13/03/2026 às 10:00 (3 diárias)",
         "*Pets:*",
         "• Thor: macho, grande, castrado, sociável, vacinas em dia",
@@ -99,6 +99,7 @@ describe("buildBookingMessage", () => {
     expect(lines.filter((line) => line.startsWith("- Mel:"))).toHaveLength(3);
     expect(text).not.toMatch(/\n\n/);
     expect(text).not.toMatch(/[⚠✅]/u);
+    expect(text).not.toMatch(/[\u{10000}-\u{10FFFF}]/u);
   });
 
   it("agrupa o mesmo aviso de pets diferentes numa linha", () => {
@@ -207,7 +208,7 @@ describe("outras mensagens", () => {
       pets: [petAnswers()],
     });
     expect(text.split("\n")[0]).toBe(
-      "Olá! 🐾 Vi no site que os dias 24/12/2026, 25/12/2026 estão lotados. Pode me avisar se abrir vaga?",
+      "Olá! Vi no site que os dias 24/12/2026, 25/12/2026 estão lotados. Pode me avisar se abrir vaga?",
     );
   });
 
@@ -224,7 +225,7 @@ describe("outras mensagens", () => {
 
   it("mensagem genérica do botão flutuante", () => {
     expect(buildGenericMessage("5585999999999", "Adri Pets").text).toBe(
-      "Olá! 🐾 Vim pelo site da Adri Pets e gostaria de saber mais sobre a hospedagem.",
+      "Olá! Vim pelo site da Adri Pets e gostaria de saber mais sobre a hospedagem.",
     );
   });
 });

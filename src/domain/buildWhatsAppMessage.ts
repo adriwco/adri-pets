@@ -121,7 +121,7 @@ function noticesBlock(pets: PetAnswers[]): string[] {
 export function buildBookingMessage(input: BookingMessageInput): WhatsAppLink {
   const notes = input.notes.trim().slice(0, 200);
   const lines = [
-    `Olá! 🐾 Fiz uma simulação no site da ${input.businessName}:`,
+    `Olá! Fiz uma simulação no site da ${input.businessName}:`,
     stayLine(input),
     "*Pets:*",
     ...input.pets.map(describePet),
@@ -152,7 +152,7 @@ export interface WaitlistMessageInput {
 export function buildWaitlistMessage(input: WaitlistMessageInput): WhatsAppLink {
   const dates = input.fullDates.map(formatDateBR).join(", ");
   const text = [
-    `Olá! 🐾 Vi no site que ${input.fullDates.length === 1 ? "o dia" : "os dias"} ${dates} ${input.fullDates.length === 1 ? "está lotado" : "estão lotados"}. Pode me avisar se abrir vaga?`,
+    `Olá! Vi no site que ${input.fullDates.length === 1 ? "o dia" : "os dias"} ${dates} ${input.fullDates.length === 1 ? "está lotado" : "estão lotados"}. Pode me avisar se abrir vaga?`,
     `*Entrada:* ${formatDateBR(input.checkInDate)} | *Saída:* ${formatDateBR(input.checkOutDate)}`,
     "*Pets:*",
     ...input.pets.map(describePet),
@@ -161,6 +161,6 @@ export function buildWaitlistMessage(input: WaitlistMessageInput): WhatsAppLink 
 }
 
 export function buildGenericMessage(whatsappE164: string, businessName: string): WhatsAppLink {
-  const text = `Olá! 🐾 Vim pelo site da ${businessName} e gostaria de saber mais sobre a hospedagem.`;
+  const text = `Olá! Vim pelo site da ${businessName} e gostaria de saber mais sobre a hospedagem.`;
   return { text, url: whatsAppUrl(whatsappE164, text) };
 }

@@ -34,7 +34,7 @@ export function buildFaq(config: SiteConfig): FaqItem[] {
     {
       question: "O que preciso levar?",
       answer:
-        "A ração do dia a dia e os potes são obrigatórios, além dos remédios e da carteira de vacinação. Brinquedos, petiscos, manta e caminha são bem-vindos para ele se sentir em casa.",
+        "A ração do dia a dia e os potes são obrigatórios. Brinquedos, petiscos, manta e caminha são bem-vindos para ele se sentir em casa.",
     },
     {
       question: "Recebem fêmea não castrada?",
