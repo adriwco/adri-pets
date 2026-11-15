@@ -16,7 +16,7 @@ const priceSentence =
     ? `Diária de ${formatCurrency(lowestRate)} por pet, de qualquer porte.`
     : `Diárias a partir de ${formatCurrency(lowestRate)}.`;
 const faq = buildFaq(siteConfig);
-const galleryHighlights = (await loadGallery()).slice(0, 6);
+const galleryHighlights = (await loadGallery()).slice(0, 8);
 
 const heroTitle = "Seu cão em casa de família, como se fosse daqui";
 const heroWords = splitIntoWords(heroTitle);

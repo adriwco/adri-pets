@@ -28,10 +28,10 @@ test("a galeria abre com a Kiara e o Jack, filtra por porte e amplia a foto", as
   await expect(dialog).toBeHidden();
 });
 
-test("a home mostra 6 hóspedes e leva para a galeria", async ({ page }) => {
+test("a home mostra 8 hóspedes e leva para a galeria", async ({ page }) => {
   await page.goto("/");
   const section = page.locator("section", { has: page.getByRole("heading", { name: "Quem já passou por aqui" }) });
-  await expect(section.locator("li")).toHaveCount(6);
+  await expect(section.locator("li")).toHaveCount(8);
   await section.getByRole("link", { name: "Ver a galeria completa" }).click();
   await expect(page).toHaveURL(/\/galeria/);
 });
