@@ -41,6 +41,14 @@ Por isso não há banco de dados, login nem servidor: é um site estático, ráp
 - **Ração para levar**: calcula quanto o tutor deve trazer, com 15% de folga.
 - **Sinal opcional** de 50% para quem quer garantir a vaga logo.
 - **Simulação salva no aparelho** do próprio tutor, para não se perder ao fechar a página.
+- **Experiência cinematográfica de fim de tarde**:
+  - abertura com o título surgindo palavra por palavra, o sol nascendo e a pata "carimbada";
+  - troca de página com *View Transitions* (o título da home vira o título do orçamento);
+  - cada etapa do simulador entra como uma cena, e o ticket da reserva é "impresso" com um brilho de luz;
+  - rolagem suave, paralaxe no topo e cartões entrando ao rolar;
+  - luz dourada com poeira em WebGL, nas cores do tema.
+
+  Tudo some com "reduzir movimento" ou com a economia de dados ligada, e o código da etapa mais pesada só carrega depois que a página aparece.
 
 <p align="center">
   <img src="docs/screenshots/home-computador.webp" width="820" alt="Página inicial no computador">
@@ -53,6 +61,7 @@ Por isso não há banco de dados, login nem servidor: é um site estático, ráp
 | Site | [Astro](https://astro.build) (HTML estático) |
 | Simulador | [Preact](https://preactjs.com) como ilha interativa |
 | Estilo | [Tailwind CSS](https://tailwindcss.com) com as fontes Fredoka e Nunito hospedadas no próprio site |
+| Movimento | CSS nativo (*View Transitions* e animações por rolagem), [GSAP](https://gsap.com) com ScrollTrigger para as cenas sincronizadas com a rolagem e [Lenis](https://lenis.darkroom.engineering) para a rolagem suave; ambos carregados sob demanda |
 | Validação | [Zod](https://zod.dev) (a configuração inválida impede o build) |
 | Testes | [Vitest](https://vitest.dev), [fast-check](https://fast-check.dev) e [Playwright](https://playwright.dev) |
 | Qualidade | TypeScript no modo mais estrito, ESLint e CI no GitHub Actions |
@@ -98,10 +107,12 @@ src/
 ├── viewModels/    estado do simulador (liga a tela às regras)
 ├── components/    componentes de interface, sem regra de negócio
 ├── content/       textos como as perguntas frequentes
+├── cinema/        camada cinematográfica: rolagem suave, cenas e luz em WebGL
 ├── layouts/       estrutura comum das páginas
 └── pages/         rotas do site
 tests/
 ├── domain/        testes unitários e de propriedades
+├── cinema/        testes das funções puras da camada cinematográfica
 └── e2e/           testes no navegador
 ```
 
