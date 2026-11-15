@@ -1,0 +1,29 @@
+---
+import { Icon } from "./Icon";
+---
+
+<dialog class="gallery-dialog" data-gallery-dialog aria-label="Foto ampliada">
+  <figure class="flex flex-col items-center gap-3">
+    <div class="relative">
+      <img
+        alt=""
+        data-gallery-dialog-image
+        class="gallery-dialog-image max-h-[74dvh] w-auto select-none rounded-2xl object-contain"
+        draggable="false"
+      />
+      <button type="button" class="gallery-nav left-2" data-gallery-prev aria-label="Foto anterior">
+        <Icon name="arrow-left" size={22} />
+      </button>
+      <button type="button" class="gallery-nav right-2" data-gallery-next aria-label="Próxima foto">
+        <Icon name="arrow-right" size={22} />
+      </button>
+    </div>
+    <figcaption class="text-center text-[15px] font-bold text-surface">
+      <span data-gallery-dialog-caption></span>
+      <span class="mt-1 block text-[13px] font-semibold text-sun" data-gallery-dialog-counter></span>
+    </figcaption>
+  </figure>
+  <form method="dialog">
+    <button type="submit" class="btn-secondary mt-4" autofocus>Fechar</button>
+  </form>
+</dialog>

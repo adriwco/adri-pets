@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { sortGallery } from "../../src/domain/gallery";
+import { sortGallery, stepIndex, swipeDirection } from "../../src/domain/gallery";
 
 const items = [
   { petName: "Thor", takenAt: "2026-06-27" },
@@ -19,5 +19,25 @@ describe("sortGallery", () => {
     const copy = [...items];
     sortGallery(items);
     expect(items).toEqual(copy);
+  });
+});
+
+describe("stepIndex", () => {
+  it("avança e volta dando a volta nas pontas", () => {
+    expect([stepIndex(0, 1, 5), stepIndex(4, 1, 5), stepIndex(0, -1, 5), stepIndex(2, -1, 5)]).toEqual([1, 0, 4, 1]);
+  });
+
+  it("fica no zero com a lista vazia", () => {
+    expect(stepIndex(0, 1, 0)).toBe(0);
+  });
+});
+
+describe("swipeDirection", () => {
+  it("arrastar para a esquerda mostra a próxima e para a direita a anterior", () => {
+    expect([swipeDirection(-80, 10), swipeDirection(80, -10)]).toEqual([1, -1]);
+  });
+
+  it("ignora toque curto e arrasto mais vertical que horizontal", () => {
+    expect([swipeDirection(-30, 0), swipeDirection(-80, 120)]).toEqual([0, 0]);
   });
 });

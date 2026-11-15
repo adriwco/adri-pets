@@ -146,7 +146,30 @@
     @apply m-auto max-w-[min(92vw,960px)] bg-transparent p-0 text-center;
   }
 
+  .gallery-nav {
+    @apply absolute top-1/2 flex size-11 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full bg-white/90 text-ink shadow-[0_6px_18px_rgba(43,36,32,0.35)] transition hover:bg-white;
+  }
+
+  .gallery-nav[hidden] {
+    display: none;
+  }
+
+  .gallery-dialog-image {
+    touch-action: pan-y;
+  }
+
+  .gallery-dialog-image.is-changing {
+    animation: gallery-photo-in 0.35s ease-out;
+  }
+
   .gallery-dialog::backdrop {
     background: rgba(43, 36, 32, 0.88);
+  }
+}
+
+@keyframes gallery-photo-in {
+  from {
+    opacity: 0.2;
+    transform: scale(0.97);
   }
 }

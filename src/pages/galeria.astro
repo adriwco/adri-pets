@@ -1,5 +1,6 @@
 ---
 import GalleryGrid from "../components/GalleryGrid.astro";
+import GalleryLightbox from "../components/GalleryLightbox.astro";
 import { Icon } from "../components/Icon";
 import { siteConfig } from "../config/site.config";
 import { loadGallery } from "../content/loadGallery";
@@ -49,19 +50,12 @@ const instagramUrl = business.instagramHandle ? `https://www.instagram.com/${bus
     }
   </section>
 
-  <dialog class="gallery-dialog" data-gallery-dialog aria-label="Foto ampliada">
-    <figure class="flex flex-col items-center gap-3">
-      <img alt="" data-gallery-dialog-image class="max-h-[78dvh] w-auto rounded-2xl object-contain" />
-      <figcaption class="text-center text-[15px] font-bold text-surface" data-gallery-dialog-caption></figcaption>
-    </figure>
-    <form method="dialog">
-      <button type="submit" class="btn-secondary mt-4" autofocus>Fechar</button>
-    </form>
-  </dialog>
+  <GalleryLightbox />
 </BaseLayout>
 
 <script>
-  import { setupGallery } from "../components/setupGallery";
+  import { setupGalleryFilters, setupGalleryLightbox } from "../components/setupGallery";
 
-  setupGallery(document);
+  setupGalleryFilters(document);
+  setupGalleryLightbox(document);
 </script>

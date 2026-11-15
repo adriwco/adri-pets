@@ -24,3 +24,15 @@ export function sortGallery<T extends GalleryFacts>(items: readonly T[]): T[] {
       first.petName.localeCompare(second.petName, "pt-BR"),
   );
 }
+
+export function stepIndex(current: number, delta: number, length: number): number {
+  if (length <= 0) return 0;
+  return (((current + delta) % length) + length) % length;
+}
+
+export const SWIPE_MIN_DISTANCE = 50;
+
+export function swipeDirection(deltaX: number, deltaY: number): -1 | 0 | 1 {
+  if (Math.abs(deltaX) < SWIPE_MIN_DISTANCE || Math.abs(deltaX) <= Math.abs(deltaY)) return 0;
+  return deltaX < 0 ? 1 : -1;
+}
