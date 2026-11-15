@@ -1,0 +1,52 @@
+---
+import type { ImageMetadata } from "astro";
+import type { PetSize } from "../domain/types";
+
+interface GalleryCard {
+  id: string;
+  file: ImageMetadata;
+  thumb: ImageMetadata;
+  petName: string;
+  breed: string;
+  size: PetSize;
+  caption: string;
+}
+
+interface Props {
+  items: GalleryCard[];
+}
+
+const { items } = Astro.props;
+---
+
+<ul class="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4" data-gallery-grid>
+  {
+    items.map((item) => (
+      <li class="gallery-card cine-reveal" data-size={item.size}>
+        <a
+          href={item.file.src}
+          class="group block overflow-hidden rounded-3xl bg-white shadow-[0_6px_20px_rgba(122,78,45,0.10)] no-underline"
+          data-gallery-open
+          data-full={item.file.src}
+          data-full-width={item.file.width}
+          data-full-height={item.file.height}
+          data-caption={`${item.petName} · ${item.breed}. ${item.caption}`}
+        >
+          <img
+            src={item.thumb.src}
+            width={item.thumb.width}
+            height={item.thumb.height}
+            alt={`${item.petName}, ${item.breed}: ${item.caption}`}
+            loading="lazy"
+            decoding="async"
+            class="aspect-4/5 w-full object-cover transition duration-300 group-hover:scale-105"
+          />
+          <span class="block px-3 py-2.5">
+            <strong class="block font-display text-[17px] text-brand">{item.petName}</strong>
+            <span class="block text-[13px] leading-snug text-muted">{item.breed}</span>
+          </span>
+        </a>
+      </li>
+    ))
+  }
+</ul>

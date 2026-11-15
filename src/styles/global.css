@@ -132,3 +132,21 @@
     @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-full border-[1.5px] border-line bg-white px-5 text-sm font-bold text-ink transition hover:bg-accent-soft;
   }
 }
+
+@layer components {
+  .filter-chip {
+    @apply inline-flex min-h-11 cursor-pointer items-center rounded-full border-[1.5px] border-line bg-white px-4 text-sm font-semibold text-muted transition-colors;
+  }
+
+  .filter-chip[aria-pressed="true"] {
+    @apply border-2 border-brand bg-brand-soft font-extrabold text-brand;
+  }
+
+  .gallery-dialog {
+    @apply m-auto max-w-[min(92vw,960px)] bg-transparent p-0 text-center;
+  }
+
+  .gallery-dialog::backdrop {
+    background: rgba(43, 36, 32, 0.88);
+  }
+}

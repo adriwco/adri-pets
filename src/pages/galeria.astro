@@ -1,0 +1,67 @@
+---
+import GalleryGrid from "../components/GalleryGrid.astro";
+import { Icon } from "../components/Icon";
+import { siteConfig } from "../config/site.config";
+import { loadGallery } from "../content/loadGallery";
+import { PET_SIZES } from "../domain/types";
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const { business, sizeLabels } = siteConfig;
+const items = await loadGallery();
+const sizesInGallery = PET_SIZES.filter((size) => items.some((item) => item.size === size));
+const instagramUrl = business.instagramHandle ? `https://www.instagram.com/${business.instagramHandle.replace(/^@/, "")}` : null;
+---
+
+<BaseLayout
+  title="Galeria"
+  description={`Fotos reais dos cães que já se hospedaram na ${business.name}, em ${business.city}.`}
+>
+  <section class="mx-auto max-w-5xl px-5 pt-2">
+    <h1 class="page-title text-[32px] font-semibold sm:text-5xl">Quem já passou por aqui</h1>
+    <p class="mt-3 text-[17px] text-muted">Uma turminha cheia de amor que já passou por aqui! 🐾</p>
+
+    {
+      sizesInGallery.length > 1 && (
+        <div class="mt-6 flex flex-wrap gap-2" role="group" aria-label="Filtrar por porte">
+          <button type="button" class="filter-chip" data-gallery-filter="" aria-pressed="true">
+            Todos
+          </button>
+          {sizesInGallery.map((size) => (
+            <button type="button" class="filter-chip" data-gallery-filter={size} aria-pressed="false">
+              {sizeLabels[size]}
+            </button>
+          ))}
+        </div>
+      )
+    }
+
+    <div class="mt-6">
+      <GalleryGrid items={items} />
+    </div>
+
+    {
+      instagramUrl && (
+        <a href={instagramUrl} target="_blank" rel="noopener noreferrer" class="btn-secondary mt-8">
+          Veja mais no Instagram
+          <Icon name="arrow-right" size={18} />
+        </a>
+      )
+    }
+  </section>
+
+  <dialog class="gallery-dialog" data-gallery-dialog aria-label="Foto ampliada">
+    <figure class="flex flex-col items-center gap-3">
+      <img alt="" data-gallery-dialog-image class="max-h-[78dvh] w-auto rounded-2xl object-contain" />
+      <figcaption class="text-center text-[15px] font-bold text-surface" data-gallery-dialog-caption></figcaption>
+    </figure>
+    <form method="dialog">
+      <button type="submit" class="btn-secondary mt-4" autofocus>Fechar</button>
+    </form>
+  </dialog>
+</BaseLayout>
+
+<script>
+  import { setupGallery } from "../components/setupGallery";
+
+  setupGallery(document);
+</script>

@@ -5,6 +5,8 @@ import { buildFaq } from "../content/faq";
 import { formatCurrency } from "../domain/money";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { splitIntoWords } from "../cinema/splitIntoWords";
+import GalleryGrid from "../components/GalleryGrid.astro";
+import { loadGallery } from "../content/loadGallery";
 
 const { business, capacity, prices } = siteConfig;
 const rates = Object.values(prices.rateCents);
@@ -14,6 +16,7 @@ const priceSentence =
     ? `Diária de ${formatCurrency(lowestRate)} por pet, de qualquer porte.`
     : `Diárias a partir de ${formatCurrency(lowestRate)}.`;
 const faq = buildFaq(siteConfig);
+const galleryHighlights = (await loadGallery()).slice(0, 6);
 
 const heroTitle = "Seu cão em casa de família, como se fosse daqui";
 const heroWords = splitIntoWords(heroTitle);
@@ -125,6 +128,21 @@ const steps = [
       <Icon name="arrow-right" size={20} />
     </a>
   </section>
+
+  {
+    galleryHighlights.length > 0 && (
+      <section class="mx-auto max-w-5xl px-5 pt-14" aria-labelledby="hospedes">
+        <h2 id="hospedes" class="text-[26px] font-semibold sm:text-3xl">Quem já passou por aqui</h2>
+        <div class="mt-5">
+          <GalleryGrid items={galleryHighlights} />
+        </div>
+        <a href="/galeria" class="btn-secondary mt-6">
+          Ver a galeria completa
+          <Icon name="arrow-right" size={18} />
+        </a>
+      </section>
+    )
+  }
 
   <section class="mx-auto max-w-5xl px-5 pt-14" aria-labelledby="perguntas">
     <h2 id="perguntas" class="text-[26px] font-semibold sm:text-3xl">Perguntas frequentes</h2>
