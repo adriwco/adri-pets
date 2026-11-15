@@ -6,6 +6,7 @@ import { formatCurrency } from "../domain/money";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { splitIntoWords } from "../cinema/splitIntoWords";
 import GalleryGrid from "../components/GalleryGrid.astro";
+import GalleryLightbox from "../components/GalleryLightbox.astro";
 import { loadGallery } from "../content/loadGallery";
 
 const { business, capacity, prices } = siteConfig;
@@ -136,6 +137,7 @@ const steps = [
         <div class="mt-5">
           <GalleryGrid items={galleryHighlights} />
         </div>
+        <GalleryLightbox />
         <a href="/galeria" class="btn-secondary mt-6">
           Ver a galeria completa
           <Icon name="arrow-right" size={18} />
@@ -163,3 +165,9 @@ const steps = [
     </div>
   </section>
 </BaseLayout>
+
+<script>
+  import { setupGalleryLightbox } from "../components/setupGallery";
+
+  setupGalleryLightbox(document);
+</script>
