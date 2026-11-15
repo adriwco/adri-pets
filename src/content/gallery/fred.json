@@ -1,0 +1,10 @@
+{
+  "file": "./fred.webp",
+  "thumb": "./fred-thumb.webp",
+  "petName": "Fred",
+  "breed": "Lhasa apso",
+  "size": "PEQUENO",
+  "caption": "Sorriso na sala",
+  "takenAt": "2026-08-15",
+  "tutorAuthorized": true
+}
