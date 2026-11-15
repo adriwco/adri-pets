@@ -68,23 +68,23 @@ Por isso não há banco de dados, login nem servidor: é um site estático, ráp
 
 ## Como rodar
 
-Requisitos: Node.js 22 e pnpm (via `corepack enable pnpm`).
+Requisitos: Node.js 22 e npm.
 
 ```bash
-pnpm install
-pnpm dev
+npm install
+npm run dev
 ```
 
 O site abre em http://localhost:4321.
 
 | Comando | O que faz |
 |---|---|
-| `pnpm dev` | Servidor local |
-| `pnpm check` | Tipos (`astro check`) e lint |
-| `pnpm test` | Testes do motor de orçamento |
-| `pnpm test:coverage` | Testes com cobertura mínima obrigatória |
-| `pnpm test:e2e` | Simulador no navegador, no celular e no computador |
-| `pnpm build` | Gera o site estático em `dist/` |
+| `npm run dev` | Servidor local |
+| `npm run check` | Tipos (`astro check`) e lint |
+| `npm test` | Testes do motor de orçamento |
+| `npm run test:coverage` | Testes com cobertura mínima obrigatória |
+| `npm run test:e2e` | Simulador no navegador, no celular e no computador |
+| `npm run build` | Gera o site estático em `dist/` |
 
 ## Configuração
 

@@ -10,7 +10,7 @@ export default defineConfig({
     { name: "desktop", use: { ...devices["Desktop Chrome"] } },
   ],
   webServer: {
-    command: "pnpm build && exec python3 -m http.server 4322 --bind 127.0.0.1 --directory dist",
+    command: "npm run build && exec python3 -m http.server 4322 --bind 127.0.0.1 --directory dist",
     url: "http://127.0.0.1:4322",
     reuseExistingServer: false,
     timeout: 120_000,
